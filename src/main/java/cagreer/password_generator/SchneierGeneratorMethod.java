@@ -34,11 +34,20 @@ public final class SchneierGeneratorMethod implements GeneratorMethod {
 	}
 
 	@Override
+	public String toString() {
+		return getClass().getName() + ": [preferedOffset=" + preferedOffset + ", minCharacters=" + minCharacters + "]";
+	}
+
+	@Override
 	public String generateFrom(String input) {
+		if(input == null) {
+			throw new NullPointerException();
+		}
+		
 		String[] words = input.split("\\s");
 		Iterable<String> itr = Arrays.asList(words);
 		validateInput(itr);
-		
+
 		return createPassword(itr);
 	}
 

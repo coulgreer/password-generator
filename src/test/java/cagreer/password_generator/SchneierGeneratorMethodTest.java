@@ -84,5 +84,11 @@ public class SchneierGeneratorMethodTest {
 
 		Assert.assertEquals(expected, actual);
 	}
+	
+	@Test(expected = NullPointerException.class) 
+	public void generateFrom_NullInput_ThrowsException() {
+		SchneierGeneratorMethod sgm = new SchneierGeneratorMethod();
+		sgm.generateFrom(null);
+	}
 
 }
