@@ -3,7 +3,7 @@ package cagreer.password_generator;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class SchneierGeneratorMethodTest {
+public final class SchneierGeneratorMethodTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void SchneierGeneratorMethod_MinCharactersArgumentLessThanMinCharactersConstant_ThrowsException() {
@@ -84,8 +84,8 @@ public class SchneierGeneratorMethodTest {
 
 		Assert.assertEquals(expected, actual);
 	}
-	
-	@Test(expected = NullPointerException.class) 
+
+	@Test(expected = NullPointerException.class)
 	public void generateFrom_NullInput_ThrowsException() {
 		SchneierGeneratorMethod sgm = new SchneierGeneratorMethod();
 		sgm.generateFrom(null);
