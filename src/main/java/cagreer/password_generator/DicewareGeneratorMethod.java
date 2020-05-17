@@ -15,8 +15,8 @@ public final class DicewareGeneratorMethod implements GeneratorMethod {
 	public static final int MIN_WORD_COUNT = 4;
 	public static final int KEY_LENGTH = 5;
 
-	public static final int LOWER_BOUND = 11111;
-	public static final int UPPER_BOUND = 66666;
+	public static final int LOWER_BOUND = 1;
+	public static final int UPPER_BOUND = 6;
 
 	private static final char[][] REPLACEMENT_CHARACTERS = { //
 			{ '~', '!', '#', '$', '%', '^' }, //
@@ -60,6 +60,14 @@ public final class DicewareGeneratorMethod implements GeneratorMethod {
 		}
 
 		return wordsByDiceRoll;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getName() + ": " //
+				+ "[wordsByDiceRoll=" + wordsByDiceRoll + ", " //
+				+ "wordCount=" + wordCount + ", " //
+				+ "hasExtraSecurity=" + hasExtraSecurity + "]";
 	}
 
 	@Override
@@ -108,7 +116,7 @@ public final class DicewareGeneratorMethod implements GeneratorMethod {
 	private static void validateKeyMember(String key) {
 		if (key.length() != DicewareGeneratorMethod.KEY_LENGTH) {
 			throw new IllegalArgumentException( //
-					String.format("The key: {0} is invalid. Key length: {1}, but required length {2}", //
+					String.format("The key: %s is invalid. Key length: %d, but required length %d", //
 							key, //
 							key.length(), //
 							DicewareGeneratorMethod.KEY_LENGTH));
@@ -137,25 +145,34 @@ public final class DicewareGeneratorMethod implements GeneratorMethod {
 			secondRoll -= word.length();
 		}
 
-		words[firstRoll] = word.substring(0, secondRoll) //
-				+ REPLACEMENT_CHARACTERS[secRandom.nextInt(D6_FACES)][secRandom.nextInt(D6_FACES)] //
-				+ word.substring(secondRoll + 1);
+		words[firstRoll] = secondRoll < word.length()
+				? word.substring(0, secondRoll)
+						+ REPLACEMENT_CHARACTERS[secRandom.nextInt(D6_FACES)][secRandom.nextInt(D6_FACES)]
+						+ word.substring(secondRoll + 1)
+				: word.substring(0, secondRoll)
+						+ REPLACEMENT_CHARACTERS[secRandom.nextInt(D6_FACES)][secRandom.nextInt(D6_FACES)];
 	}
 
 	public static String generateKeyString(int wordCount) {
 		if (wordCount < MIN_WORD_COUNT) {
-			throw new IllegalArgumentException(
-					String.format("WordCount :: minimum: %d , actual: %d", MIN_WORD_COUNT, wordCount));
+			throw new IllegalArgumentException( //
+					String.format("WordCount :: minimum: %d , actual: %d", //
+							MIN_WORD_COUNT, //
+							wordCount));
 		}
 
-		SecureRandom secRandom = new SecureRandom();
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < wordCount; i++) {
-			int value = LOWER_BOUND + secRandom.nextInt((UPPER_BOUND - LOWER_BOUND) + 1);
-			sb.append(value + " ");
+			sb.append(rollDie() + rollDie() + rollDie() + rollDie() + rollDie() + " ");
 		}
 
 		return sb.toString().trim();
+	}
+
+	private static String rollDie() {
+		SecureRandom secRandom = new SecureRandom();
+		int value = LOWER_BOUND + secRandom.nextInt(UPPER_BOUND);
+		return Integer.toString(value);
 	}
 }
