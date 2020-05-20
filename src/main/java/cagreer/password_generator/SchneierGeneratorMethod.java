@@ -5,6 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class SchneierGeneratorMethod implements GeneratorMethod {
+	public static final String DESCRIPTION = "Take a sentence and turn it into a password. Something "
+			+ "like \"This little piggy went to market\" might become \"tlpWENT2m\". That nine-"
+			+ "character password won't be in anyone's dictionary. Of course, don't use this one, "
+			+ "because I've written about it. Choose your own sentence - something personal.\n\n"
+			+ "   Quoted from: https://www.schneier.com/essays/archives/2008/11/passwords_are_not_br.html";
+
 	public static final int MIN_OFFSET = 1;
 
 	public final int preferedOffset;

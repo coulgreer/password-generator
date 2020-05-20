@@ -11,6 +11,13 @@ import java.util.Scanner;
 public final class DicewareGeneratorMethod implements GeneratorMethod {
 	public static final String ORIGINAL_WORD_LIST_PATH = "./resources/word-lists/original-wordlist.txt";
 	public static final String BEALE_WORD_LIST_PATH = "./resources/word-lists/beale-wordlist.txt";
+	public static final String EFF_WORD_LIST_PATH = "./resources/word-lists/eff-large-wordlist.txt";
+
+	public static final String DESCRIPTION = "A method for picking passphrases that uses ordinary dice "
+			+ "to select words at random from a special list. Each word in the list is preceded by a "
+			+ "five digit number. All the digits are between one and six, allowing you to use the "
+			+ "outcomes of five dice rolls to select a word from the list.\n\n   Quoted from: "
+			+ "https://theworld.com/~reinhold/diceware.html";
 
 	public static final int MIN_WORD_COUNT = 4;
 	public static final int KEY_LENGTH = 5;
@@ -175,4 +182,5 @@ public final class DicewareGeneratorMethod implements GeneratorMethod {
 		int value = LOWER_BOUND + secRandom.nextInt(UPPER_BOUND);
 		return Integer.toString(value);
 	}
+
 }

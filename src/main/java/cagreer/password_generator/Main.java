@@ -16,20 +16,23 @@ public final class Main {
 
 	public static void main(String[] args) {
 
-		System.out.println("Choose which generation method to use:");
+		System.out.println("Choose which generation method to use:\n");
 
 		indentLevel++;
-		System.out.print( //
+		printMethodDescription();
+		System.out.print("\n" + //
 				createIndent() + "(1) Schneier\n" + //
-						createIndent() + "(2) Original Diceware\n" + //
-						createIndent() + "(3) Beale Diceware\n");
+				createIndent() + "--- Diceware ---\n" + //
+				createIndent() + "(2) Original Diceware\n" + //
+				createIndent() + "(3) Beale Diceware\n" + //
+				createIndent() + "(4) EFF Long\n");
 
 		try (Scanner sc = new Scanner(System.in)) {
 			System.out.print(createIndent() + "Choose One: ");
 			String methodChoice = sc.nextLine();
 
-			while (!methodChoice.matches("1|2|3")) {
-				System.out.println(createIndent() + "Please choose a valid input: '1', '2', '3'");
+			while (!methodChoice.matches("1|2|3|4")) {
+				System.out.println(createIndent() + "Please choose a valid input: '1', '2', '3', '4");
 
 				indentLevel++;
 				System.out.print(createIndent() + "Input: ");
@@ -54,23 +57,67 @@ public final class Main {
 				indentLevel++;
 				buildDicewarePassphrase(sc, DicewareGeneratorMethod.BEALE_WORD_LIST_PATH);
 				indentLevel--;
+			} else if (methodChoice.equals("4")) {
+				System.out.println(createIndent() + "You chose the EFF Long Method!");
+				indentLevel++;
+				buildDicewarePassphrase(sc, DicewareGeneratorMethod.EFF_WORD_LIST_PATH);
+				indentLevel--;
 			}
 		}
 
 		indentLevel--;
 	}
 
+	private static void printMethodDescription() {
+		int maxLineLength = 100;
+
+		String schneierTitle = "SCHNEIER Method";
+		String schneierRawText = schneierTitle + ": " + SchneierGeneratorMethod.DESCRIPTION;
+		System.out.println(formatTextForConsole(maxLineLength, schneierRawText) + "\n\n");
+
+		String dicewareTitle = "DICEWARE Method";
+		String dicewareRawText = dicewareTitle + ": " + DicewareGeneratorMethod.DESCRIPTION;
+		System.out.println(formatTextForConsole(maxLineLength, dicewareRawText) + "\n\n");
+
+	}
+
+	private static String formatTextForConsole(int maxLineLength, String rawText) {
+		Pattern p = Pattern.compile("\\s+|((?<=[0-9a-zA-Z]+)-(?=[0-9a-zA-Z]+))");
+		String formattedText = rawText.substring(0, maxLineLength);
+		rawText = rawText.substring(maxLineLength);
+		StringBuilder sb = new StringBuilder();
+		sb.append(formattedText);
+		do {
+			if (rawText.length() > maxLineLength - INDENT.length()) {
+				formattedText = rawText.substring(0, maxLineLength - INDENT.length());
+				Matcher m = p.matcher(formattedText);
+				String lastMatch = "";
+				while (m.find()) {
+					lastMatch = m.group();
+				}
+				int lastIndex = formattedText.lastIndexOf(lastMatch);
+				formattedText = formattedText.substring(0, lastIndex).trim();
+				rawText = rawText.substring(lastIndex);
+			} else {
+				formattedText = rawText.trim();
+				rawText = "";
+			}
+			sb.append("\n" + INDENT + formattedText);
+		} while (rawText.length() > 0);
+		formattedText = sb.toString();
+
+		return formattedText;
+	}
+
 	private static void buildSchneierPassphrase(Scanner sc) {
 		SchneierGeneratorMethod schneier;
 
-		indentLevel++;
 		int preferedOffset = promptPreferedOffset(sc);
 		System.out.println();
 		int minCharacters = promptMinCharacters(sc);
 		schneier = new SchneierGeneratorMethod(preferedOffset, minCharacters);
 		System.out.println();
 		String passphrase = schneier.generateFrom(promptSentance(sc, minCharacters));
-		indentLevel--;
 
 		indentLevel = 0;
 		System.out.println("\n\n" + createIndent() + "Your generated passphrase is:");
@@ -153,22 +200,17 @@ public final class Main {
 	private static void buildDicewarePassphrase(Scanner sc, String listPath) {
 		DicewareGeneratorMethod diceware;
 
-		indentLevel++;
 		int wordCount = promptWordCount(sc);
 		System.out.println();
 		boolean hasExtraSecurity = promptExtraSecurity(sc);
-		System.out.println();
-		indentLevel--;
 
 		try {
-			indentLevel++;
 			diceware = new DicewareGeneratorMethod( //
 					listPath, //
 					wordCount, //
 					hasExtraSecurity);
 			String key = DicewareGeneratorMethod.generateKeyString(wordCount);
 			String passphrase = diceware.generateFrom(key);
-			indentLevel--;
 
 			indentLevel = 0;
 			System.out.println("\n\n" + createIndent() + "Your generated passphrase is:");
