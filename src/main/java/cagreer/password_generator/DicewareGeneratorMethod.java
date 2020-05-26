@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public final class DicewareGeneratorMethod implements GeneratorMethod {
-	public static final String ORIGINAL_WORD_LIST_PATH = "./resources/word-lists/original-wordlist.txt";
-	public static final String BEALE_WORD_LIST_PATH = "./resources/word-lists/beale-wordlist.txt";
-	public static final String EFF_WORD_LIST_PATH = "./resources/word-lists/eff-large-wordlist.txt";
+	public static final String ORIGINAL_WORD_LIST_PATH = "./src/resources/word-lists/original-wordlist.txt";
+	public static final String BEALE_WORD_LIST_PATH = "./src/resources/word-lists/beale-wordlist.txt";
+	public static final String EFF_WORD_LIST_PATH = "./src/resources/word-lists/eff-large-wordlist.txt";
 
 	public static final String DESCRIPTION = "A method for picking passphrases that uses ordinary dice "
 			+ "to select words at random from a special list. Each word in the list is preceded by a "
