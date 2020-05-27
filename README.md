@@ -1,5 +1,5 @@
 # Password Generator
-[![Build Status](https://travis-ci.com/cagreer18/password-generator.svg?branch=master)](https://travis-ci.com/cagreer18/password-generator) [![Coverage Status](https://coveralls.io/repos/github/cagreer18/password-generator/badge.svg?branch=master)](https://coveralls.io/github/cagreer18/password-generator?branch=master) 
+[![Build Status](https://travis-ci.com/cagreer18/password-generator.svg?branch=master)](https://travis-ci.com/cagreer18/password-generator)
 
 This password generator is meant to help anyone come up with secure passwords/phrases. Also, it is meant to help explain the methods used if the user wishes to hand generate words/phrases.
 
