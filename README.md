@@ -10,7 +10,7 @@ Note: 'Password' and 'passphrase' are used interchangeably to describe any seque
 ## Usage
 
 ### Prerequisite
-* Java 1.8.0 or higher
+* JDK 1.8.0 or higher
 * Git
 * Maven
 
@@ -23,5 +23,5 @@ In the command line:
 git clone https://github.com/cagreer18/password-generator
 cd password-generator
 mvn -Dmaven.test.skip=true package
-java -cp target/password-generator-1.0.0-SNAPSHOT.jar cagreer.password_generator.Main
+java -cp target/password-generator-1.0.1-SNAPSHOT.jar cagreer.password_generator.Main
 ~~~
