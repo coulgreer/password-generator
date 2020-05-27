@@ -5,11 +5,11 @@
 
 	<groupId>cagreer</groupId>
 	<artifactId>password-generator</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>password-generator</name>
-	<url>http://maven.apache.org</url>
+	<url>https://github.com/cagreer18/password-generator</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

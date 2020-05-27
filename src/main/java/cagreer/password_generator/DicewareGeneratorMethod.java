@@ -142,13 +142,13 @@ public final class DicewareGeneratorMethod implements GeneratorMethod {
 		SecureRandom secRandom = new SecureRandom();
 
 		int firstRoll = secRandom.nextInt(D6_FACES);
-		while (firstRoll > words.length) {
+		while (firstRoll >= words.length) {
 			firstRoll -= words.length;
 		}
 
 		int secondRoll = secRandom.nextInt(D6_FACES);
 		String word = words[firstRoll];
-		while (secondRoll > word.length()) {
+		while (secondRoll >= word.length()) {
 			secondRoll -= word.length();
 		}
 
